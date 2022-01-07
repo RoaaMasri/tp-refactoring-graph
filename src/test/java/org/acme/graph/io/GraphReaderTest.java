@@ -68,8 +68,8 @@ public class GraphReaderTest {
 			Vertex v = graph.findVertex("1");
 			assertNotNull(v);
 			assertEquals("1", v.getId());
-			assertEquals(3, graph.getOutEdges(v).size());
-			assertEquals(3, graph.getInEdges(v).size());
+			assertEquals(2, graph.getOutEdges(v).size());
+			assertEquals(4, graph.getInEdges(v).size());
 		}
 		{
 			Vertex v = graph.findVertex("2");
