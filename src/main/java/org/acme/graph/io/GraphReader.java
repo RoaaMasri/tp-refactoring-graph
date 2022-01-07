@@ -102,7 +102,7 @@ public class GraphReader {
 			reverseEdge.setId(id + "-reverse");
 			reverseEdge.setSource(target);
 			reverseEdge.setTarget(source);*/
-			graph.createEdge(source, target, id);
+			graph.createEdge(target, source, id);
 		}
 	}
 
