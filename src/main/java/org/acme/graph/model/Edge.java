@@ -32,10 +32,22 @@ public class Edge {
 	 * Sommet final
 	 */
 	private Vertex target;
-
+	
+	/**
+	 * attribut geometry
+	 */
+	private LineString geometry;
+	
+	/**
+	 * Constructor
+	 */
 	protected Edge(Vertex source, Vertex target ) {
-		this.source= source;
-		this.target = target;
+		if (source==null || target==null){
+			throw new NullPointerException("Vertex is null");
+		} else {
+			this.source= source;
+			this.target = target;
+		}
 	}
 
 	public String getId() {
@@ -82,16 +94,30 @@ public class Edge {
 	 * @return
 	 */
 	public double getCost() {
-		return source.getCoordinate().distance(target.getCoordinate());
+		//return source.getCoordinate().distance(target.getCoordinate());
+		if (this.geometry != null) {
+			return this.geometry.getLength();
+		} else {
+			return this.getGeometry().getLength();
+		}
 	}
+	
 
 	@JsonSerialize(using = GeometrySerializer.class)
 	public LineString getGeometry() {
-		GeometryFactory gf = new GeometryFactory();
-		return gf.createLineString(new Coordinate[] {
-			source.getCoordinate(),
-			target.getCoordinate()
-		});
+		if (this.geometry==null) {
+			GeometryFactory gf = new GeometryFactory();
+			return gf.createLineString(new Coordinate[] {
+				source.getCoordinate(),
+				target.getCoordinate()
+			});
+		}else {
+			return this.geometry;
+		}
+	}
+	
+	public void setGeometry(LineString geometry) {
+		this.geometry = geometry;
 	}
 
 	@Override
@@ -99,4 +125,6 @@ public class Edge {
 		return id + " (" + source + "->" + target + ")";
 	}
 
+	
+	
 }
